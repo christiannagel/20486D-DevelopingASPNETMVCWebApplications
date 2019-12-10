@@ -13,9 +13,9 @@ namespace WorldJourney.Controllers
     public class CityController : Controller
     {
         private IData _data;
-        private IHostingEnvironment _environment;
+        private IWebHostEnvironment _environment;
 
-        public CityController(IData data, IHostingEnvironment environment)
+        public CityController(IData data, IWebHostEnvironment environment)
         {
             _data = data;
             _environment = environment;
