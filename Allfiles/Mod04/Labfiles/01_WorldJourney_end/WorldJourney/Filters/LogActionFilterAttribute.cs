@@ -9,11 +9,11 @@ namespace WorldJourney.Filters
 {
     public class LogActionFilterAttribute : ActionFilterAttribute
     {
-        private IWebHostEnvironment _environment;
-        private string _contentRootPath;
-        private string _logPath;
-        private string _fileName;
-        private string _fullPath;
+        private readonly IWebHostEnvironment _environment;
+        private readonly string _contentRootPath;
+        private readonly string _logPath;
+        private readonly string _fileName;
+        private readonly string _fullPath;
 
         public LogActionFilterAttribute(IWebHostEnvironment environment)
         {
@@ -27,8 +27,8 @@ namespace WorldJourney.Filters
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             Directory.CreateDirectory(_logPath);
-            string actionName = filterContext.ActionDescriptor.RouteValues["action"];
-            string controllerName = filterContext.ActionDescriptor.RouteValues["controller"];
+            var actionName = filterContext.ActionDescriptor.RouteValues["action"];
+            var controllerName = filterContext.ActionDescriptor.RouteValues["controller"];
             using var fs = new FileStream(_fullPath, FileMode.Create);
             using var sw = new StreamWriter(fs);
             sw.WriteLine($"The action {actionName} in {controllerName} controller started, event fired: OnActionExecuting");
@@ -36,8 +36,8 @@ namespace WorldJourney.Filters
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            string actionName = filterContext.ActionDescriptor.RouteValues["action"];
-            string controllerName = filterContext.ActionDescriptor.RouteValues["controller"];
+            var actionName = filterContext.ActionDescriptor.RouteValues["action"];
+            var controllerName = filterContext.ActionDescriptor.RouteValues["controller"];
             using var fs = new FileStream(_fullPath, FileMode.Append);
             using var sw = new StreamWriter(fs);
             sw.WriteLine($"The action {actionName} in {controllerName} controller finished, event fired: OnActionExecuted");
@@ -45,9 +45,9 @@ namespace WorldJourney.Filters
 
         public override void OnResultExecuted(ResultExecutedContext filterContext)
         {
-            string actionName = filterContext.ActionDescriptor.RouteValues["action"];
-            string controllerName = filterContext.ActionDescriptor.RouteValues["controller"];
-            ViewResult result = (ViewResult)filterContext.Result;
+            var actionName = filterContext.ActionDescriptor.RouteValues["action"];
+            var controllerName = filterContext.ActionDescriptor.RouteValues["controller"];
+            var result = (ViewResult)filterContext.Result;
             using var fs = new FileStream(_fullPath, FileMode.Append);
             using var sw = new StreamWriter(fs);
             sw.WriteLine($"The action {actionName} in {controllerName} controller has the following viewData : {result.ViewData.Values.FirstOrDefault()}, event fired: OnResultExecuted");

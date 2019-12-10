@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WorldJourney.Models
 {
     public interface IData
     {
-        List<City> CityList { get; set; }
-        List<City> CityInitializeData();
+        IList<City> CityList { get; set; }
+        IList<City> CityInitializeData();
         City GetCityById(int? id);
     }
 }

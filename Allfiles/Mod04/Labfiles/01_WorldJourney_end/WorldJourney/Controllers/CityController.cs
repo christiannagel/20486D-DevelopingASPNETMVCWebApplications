@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using WorldJourney.Models;
 using WorldJourney.Filters;
+using WorldJourney.Models;
 
 namespace WorldJourney.Controllers
 {
     public class CityController : Controller
     {
-        private IData _data;
-        private IWebHostEnvironment _environment;
+        private readonly IData _data;
+        private readonly IWebHostEnvironment _environment;
 
         public CityController(IData data, IWebHostEnvironment environment)
         {
@@ -50,12 +46,12 @@ namespace WorldJourney.Controllers
             City requestedCity = _data.GetCityById(cityId);
             if (requestedCity != null)
             {
-                string webRootpath = _environment.WebRootPath;
-                string folderPath = "\\images\\";
-                string fullPath = webRootpath + folderPath + requestedCity.ImageName;
-                FileStream fileOnDisk = new FileStream(fullPath, FileMode.Open);
+                var webRootpath = _environment.WebRootPath;
+                var folderPath = "\\images\\";
+                var fullPath = webRootpath + folderPath + requestedCity.ImageName;
+                var fileOnDisk = new FileStream(fullPath, FileMode.Open);
                 byte[] fileBytes;
-                using (BinaryReader br = new BinaryReader(fileOnDisk))
+                using (var br = new BinaryReader(fileOnDisk))
                 {
                     fileBytes = br.ReadBytes((int)fileOnDisk.Length);
                 }

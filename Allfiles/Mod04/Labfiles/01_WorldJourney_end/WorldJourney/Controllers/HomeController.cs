@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace WorldJourney.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            return RedirectToAction("Index", "City");
-        }
+        public IActionResult Index() => RedirectToAction("Index", "City");
     }
 }
